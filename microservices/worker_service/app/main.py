@@ -3,20 +3,18 @@ import aio_pika
 from logging_config import setup_logging
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from .urls import router as worker_router
-from .api import process_message
+from api import process_message
 from contextlib import asynccontextmanager
 from aio_pika.exceptions import AMQPConnectionError, ChannelClosed
-
+from urls import router as worker_router 
+from logging_config import logger
 
 # Create FastAPI instance
-app = FastAPI()
-
-# Setup logging configuration
-setup_logging()
-
-# Create a named logger
-logger = logging.getLogger("worker_service")  # Use the name of the microservice
+app = FastAPI(
+    title="Worker Service",
+    description="Service for processing GPS pings from RabbitMQ",
+    version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,

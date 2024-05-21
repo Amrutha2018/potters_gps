@@ -2,16 +2,15 @@ import logging
 from logging_config import setup_logging
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from .urls import router as gps_router
+from urls import router as gps_router  
+from logging_config import logger
 
 # Create FastAPI instance
-app = FastAPI()
-
-# Setup logging configuration
-setup_logging()
-
-# Create a named logger
-logger = logging.getLogger("gps_ping_api")  # Use the name of the microservice
+app = FastAPI(
+    title="User Track API",
+    description="API for retrieving GPS pings for a given session ID",
+    version="1.0.0"
+)
 
 app.add_middleware(
     CORSMiddleware,

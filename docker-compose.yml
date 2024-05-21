@@ -34,6 +34,8 @@ services:
       - rabbitmq
     networks:
       - microservices-network
+    ports:
+    - "8002:8002" 
 
   user_track_api:
     build:
@@ -47,6 +49,8 @@ services:
       - postgres
     networks:
       - microservices-network
+    ports:
+    - "8001:8001" 
 
   worker_service:
     build:
@@ -62,6 +66,8 @@ services:
       - rabbitmq
     networks:
       - microservices-network
+    ports:
+    - "8000:8000" 
 
 volumes:
   postgres_data:

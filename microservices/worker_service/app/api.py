@@ -1,18 +1,13 @@
 import json
 from datetime import datetime
 import aio_pika
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from shared_lib import RunSession, GpsPing
-from main import logger
+from shared_lib.models import RunSession, GpsPing
+from logging_config import logger
+from shared_lib.database import SessionLocal
+from shared_lib.schemas import GpsPingCreate
 
-# Database configuration
-SQLALCHEMY_DATABASE_URL = "postgresql://user:password@db/dbname"
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-async def process_message(message: aio_pika.IncomingMessage):
+async def process_message(message: GpsPingCreate):
     logger.info("Received a new message from RabbitMQ")
     async with message.process():
         db = SessionLocal()

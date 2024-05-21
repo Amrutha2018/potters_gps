@@ -6,3 +6,4 @@ microservices/user_track_api/app/__pycache__
 microservices/shared_lib/build
 microservices/shared_lib/dist
 microservices/shared_lib/shared_lib/__pycache__
+microservices/shared_lib/__pycache__

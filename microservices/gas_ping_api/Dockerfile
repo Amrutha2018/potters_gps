@@ -4,8 +4,8 @@ FROM python:3.9-slim
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the shared library
-COPY ../shared_lib /app/shared_lib
+# Copy the shared library source files
+COPY ../shared_lib /app/shared_lib/
 
 # Copy the requirements.txt file
 COPY gas_ping_api/app/requirements.txt /app/
@@ -13,8 +13,15 @@ COPY gas_ping_api/app/requirements.txt /app/
 # Copy the current directory contents into the container at /app
 COPY gas_ping_api/app /app
 
+# Set PYTHONPATH
+ENV PYTHONPATH=/app
+
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the wait-for-it script
+COPY gas_ping_api/wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 # Run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "/wait-for-it.sh rabbitmq:5672 -- ls -R /app && PYTHONPATH=/app uvicorn main:app --host 0.0.0.0 --port 8002"]

@@ -1,3 +1,4 @@
+import logging
 from logging.config import dictConfig
 
 def setup_logging():
@@ -20,3 +21,6 @@ def setup_logging():
             'handlers': ['wsgi']
         }
     })
+
+setup_logging()
+logger = logging.getLogger("user_track_api")

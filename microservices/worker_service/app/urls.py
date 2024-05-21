@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .api import process_message
+from api import process_message
 
 router = APIRouter()
 

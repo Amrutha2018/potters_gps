@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from .api import receive_gps_ping
+from api import receive_gps_ping
 
 router = APIRouter()
 

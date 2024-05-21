@@ -3,3 +3,6 @@ fastapi
 uvicorn
 aio_pika
 pydantic
+sqlalchemy
+psycopg2-binary
+
