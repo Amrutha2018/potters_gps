@@ -7,8 +7,8 @@ from logging_config import logger
 
 # Create FastAPI instance
 app = FastAPI(
-    title="User Track API",
-    description="API for retrieving GPS pings for a given session ID",
+    title="Gps Ping API",
+    description="API for receiving GPS pings",
     version="1.0.0"
 )
 
