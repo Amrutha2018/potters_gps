@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - microservices-network
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+
+  gas_ping_api:
+    build:
+      context: ./microservices
+      dockerfile: gas_ping_api/Dockerfile
+    volumes:
+      - ./microservices/shared_lib:/app/shared_lib
+    environment:
+      DATABASE_URL: postgresql://user:password@postgres/mydb
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  user_track_api:
+    build:
+      context: ./microservices
+      dockerfile: user_track_api/Dockerfile
+    volumes:
+      - ./microservices/shared_lib:/app/shared_lib
+    environment:
+      DATABASE_URL: postgresql://user:password@postgres/mydb
+    depends_on:
+      - postgres
+    networks:
+      - microservices-network
+
+  worker_service:
+    build:
+      context: ./microservices
+      dockerfile: worker_service/Dockerfile
+    volumes:
+      - ./microservices/shared_lib:/app/shared_lib
+    environment:
+      DATABASE_URL: postgresql://user:password@postgres/mydb
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+    depends_on:
+      - postgres
+      - rabbitmq
+    networks:
+      - microservices-network
+
+volumes:
+  postgres_data:
+
+networks:
+  microservices-network:
+    driver: bridge

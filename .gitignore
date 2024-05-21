@@ -1,1 +1,8 @@
 venv/
+microservices/gas_ping_api/env
+.venv
+microservices/gas_ping_api/app/__pycache__
+microservices/user_track_api/app/__pycache__
+microservices/shared_lib/build
+microservices/shared_lib/dist
+microservices/shared_lib/shared_lib/__pycache__

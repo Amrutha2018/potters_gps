@@ -1,0 +1,5 @@
+./shared_lib
+fastapi
+uvicorn
+aio_pika
+pydantic
