@@ -7,9 +7,6 @@ WORKDIR /app
 # Copy the shared library source files
 COPY ../shared_lib /app/shared_lib/
 
-# Copy the requirements.txt file
-COPY user_track_api/app/requirements.txt /app/
-
 # Copy the current directory contents into the container at /app
 COPY user_track_api/app /app
 
