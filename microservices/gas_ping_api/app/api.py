@@ -37,13 +37,6 @@ async def receive_gps_ping(ping: GpsPingCreate):
         # Prepare the message payload
         message_body = ping.dict()
 
-        # Publish the message to RabbitMQ
-        await channel.default_exchange.publish(
-            aio_pika.Message(body=json.dumps(message_body).encode()),
-            routing_key="gps_pings"
-        )
-        await connection.close()
-
         try:
             # Publish the message to RabbitMQ
             await channel.default_exchange.publish(
