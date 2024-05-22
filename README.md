@@ -20,7 +20,7 @@ This project consists of three microservices to handle GPS pings, process them v
 To start the application, navigate to the project directory and run:
 
 ```sh
-docker-compose up -d
+docker-compose up --build
 ```
 
 ### Accessing the Services
