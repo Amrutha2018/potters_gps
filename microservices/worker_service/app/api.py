@@ -71,7 +71,6 @@ async def process_message(message: GpsPingCreate):
             # Create GPS Ping
             db_ping = GpsPing(
                 session_id=session.id,
-                user_id=user.id,
                 latitude=latitude,
                 longitude=longitude,
                 timestamp=timestamp

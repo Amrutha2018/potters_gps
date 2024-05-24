@@ -36,6 +36,9 @@ async def receive_gps_ping(ping: GpsPingCreate):
 
         # Prepare the message payload
         message_body = ping.dict()
+        # Convert the datetime to a string
+        if 'timestamp' in message_body:
+            message_body['timestamp'] = message_body['timestamp'].isoformat()
 
         try:
             # Publish the message to RabbitMQ

@@ -31,7 +31,7 @@ async def get_gps_pings(user_id: int, session_id: int):
             logger.error(f"Session ID {session_id} not found for user ID {user_id}")
             raise HTTPException(status_code=404, detail="Session not found")
 
-        gps_pings = db.query(GpsPing).filter(GpsPing.session_id == session_id, GpsPing.user_id == user_id).all()
+        gps_pings = db.query(GpsPing).filter(GpsPing.session_id == session_id).all()
         logger.info(f"Found {len(gps_pings)} GPS pings for user ID {user_id}, session ID {session_id}")
 
         return gps_pings
