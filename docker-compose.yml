@@ -4,9 +4,9 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -27,15 +27,15 @@ services:
     volumes:
       - ./microservices/shared_lib:/app/shared_lib
     environment:
-      DATABASE_URL: postgresql://user:password@postgres/mydb
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      - DATABASE_URL=${DATABASE_URL}
+      - RABBITMQ_URL=${RABBITMQ_URL}
     depends_on:
       - postgres
       - rabbitmq
     networks:
       - microservices-network
     ports:
-    - "8002:8002" 
+      - "8002:8002" 
 
   user_track_api:
     build:
@@ -44,13 +44,13 @@ services:
     volumes:
       - ./microservices/shared_lib:/app/shared_lib
     environment:
-      DATABASE_URL: postgresql://user:password@postgres/mydb
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       - postgres
     networks:
       - microservices-network
     ports:
-    - "8001:8001" 
+      - "8001:8001" 
 
   worker_service:
     build:
@@ -59,15 +59,15 @@ services:
     volumes:
       - ./microservices/shared_lib:/app/shared_lib
     environment:
-      DATABASE_URL: postgresql://user:password@postgres/mydb
-      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
+      - DATABASE_URL=${DATABASE_URL}
+      - RABBITMQ_URL=${RABBITMQ_URL}
     depends_on:
       - postgres
       - rabbitmq
     networks:
       - microservices-network
     ports:
-    - "8000:8000" 
+      - "8000:8000" 
 
 volumes:
   postgres_data:
