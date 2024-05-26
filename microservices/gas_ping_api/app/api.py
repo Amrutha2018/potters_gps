@@ -1,13 +1,11 @@
-from fastapi import HTTPException, APIRouter
+from fastapi import HTTPException
 import json
 from shared_lib.schemas import GpsPingCreate
 from logging_config import logger
 import aio_pika
 from aio_pika.exceptions import AMQPConnectionError, ChannelClosed
 
-router = APIRouter()
 
-@router.post("/gps_ping", response_model=GpsPingCreate, summary="Receive a GPS Ping", description="Accepts a GPS ping and publishes it to RabbitMQ.")
 async def receive_gps_ping(ping: GpsPingCreate):
     """
     Receive a GPS ping and publish it to RabbitMQ.

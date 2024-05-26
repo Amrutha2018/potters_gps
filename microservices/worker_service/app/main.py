@@ -1,6 +1,4 @@
-import logging
 import aio_pika
-from logging_config import setup_logging
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from api import process_message

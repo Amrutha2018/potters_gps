@@ -1,15 +1,10 @@
-from fastapi import HTTPException, APIRouter
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 from shared_lib.models import GpsPing, RunSession, User
 from shared_lib.database import SessionLocal
-from shared_lib.schemas import GpsPing as GpsPingSchema
 from logging_config import logger
-from typing import List
 
 
-router = APIRouter()
-
-@router.get("/users/{user_id}/sessions/{session_id}/gps-pings", response_model=List[GpsPingSchema], summary="Retrieve GPS Pings for a User Session", description="Fetches all GPS pings for a given user and session ID.")
 async def get_gps_pings(user_id: int, session_id: int):
     """
     Retrieve GPS pings for a specific user and session.
