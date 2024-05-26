@@ -8,23 +8,23 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
-    sessions = relationship("RunSession", back_populates="user")
+    sessions = relationship("RunSession", back_populates="user", cascade="all, delete-orphan")
 
 class RunSession(Base):
     __tablename__ = "run_sessions"
     
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    user_id = Column(Integer, ForeignKey('users.id', ondelete="CASCADE"))
     start_time = Column(DateTime)
     end_time = Column(DateTime)
-    gps_pings = relationship("GpsPing", back_populates="session")
+    gps_pings = relationship("GpsPing", back_populates="session", cascade="all, delete-orphan")
     user = relationship("User", back_populates="sessions")
 
 class GpsPing(Base):
     __tablename__ = "gps_pings"
 
     id = Column(Integer, primary_key=True)
-    session_id = Column(Integer, ForeignKey('run_sessions.id'))
+    session_id = Column(Integer, ForeignKey('run_sessions.id', ondelete="CASCADE"))
     latitude = Column(Float)
     longitude = Column(Float)
     timestamp = Column(DateTime)
